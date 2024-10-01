@@ -73,6 +73,8 @@ class Ui_MainWindow(object):
         self.tableWidget.setColumnCount(5)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setRowCount(0)
+        self.tableWidget.setColumnWidth(0, 93)
+        self.tableWidget.setColumnWidth(1, 93)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
