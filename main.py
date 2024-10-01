@@ -5,16 +5,21 @@ from mainWindow import Ui_MainWindow
 import pyqtgraph as pg
 import sys
 
+boides = []
+
 class MainWindow_(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
 
         self.setupUi(self)
-        self.ButtonAccept.clicked.connect(self.AcceptBodies)
+        #self.ButtonAccept.clicked.connect(self.AcceptBodies)
 
         self.show()
 
     def AcceptBodies(self):
+        count_bodies = self.SpinBox_BodiesCount.value()
+
+
         return
 
 
