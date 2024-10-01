@@ -37,6 +37,26 @@ class PlanetMovement:
     def set_a(self, index : int, a : ntp.NDArray[np.float64]):
         self._a[:, index] = a
 
+class PlanetEnergy:
+    def __init__(self, n : int):
+        self._uk = np.zeros([n+1])
+        self._up = np.zeros([n+1])
+
+    def get_uk(self, index):
+        return self._uk[index]
+    
+    def get_up(self, index):
+        return self._up[index]
+
+    def set_uk(self, index, uk):
+        self._uk[index] = uk
+
+    def set_up(self, index, up):
+        self._up[index] = up
+
+    def get_u(self, index):
+        return self.get_uk(index) + self.get_up(index)
+
 class Planet:
     """
     Класс для хранения параметров планеты.
@@ -62,10 +82,15 @@ class Planet:
         self._dim = dim
         self._n = n
         self._movement = PlanetMovement(dim, n, r0, v0)
+        self._energy = PlanetEnergy(n)
 
     @property
     def movement(self) -> PlanetMovement:
         return self._movement
+    
+    @property
+    def energy(self) -> PlanetEnergy:
+        return self._energy
     
     @property
     def dim(self) -> int:
