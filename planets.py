@@ -2,7 +2,17 @@ import numpy as np
 import numpy.typing as ntp
 
 class PlanetMovement:
+    """
+    Класс для хранения изменений в положении, скорости и ускорении планеты в заданном временном промежутке.
+    """
     def __init__(self, dim : int, n : int, r0 : np.ndarray, v0 : np.ndarray):
+        """
+        Принимаемые значения:
+        dim - размерность пространства;
+        n - число узлов временного промежутка;
+        r0 - начальное положение планеты;
+        v0 - начальная скорость.
+        """
         self._r = np.zeros([dim, n+1])
         self._v = np.zeros([dim, n+1])
         self._a = np.zeros([dim, n+1])
@@ -28,7 +38,18 @@ class PlanetMovement:
         self._a[:, index] = a
 
 class Planet:
+    """
+    Класс для хранения параметров планеты.
+    """
     def __init__(self, m : float, dim : int, n : int, r0 : list[float] = None, v0 : list[float] = None):
+        """
+        Принимаемые значения:
+        m - масса планеты;
+        dim - размерность пространства;
+        n - число узлов временного промежутка;
+        r0 - начальное положение планеты;
+        v0 - начальная скорость.
+        """
         if r0 is None:
             r0 = np.zeros([dim])
         else:

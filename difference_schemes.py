@@ -6,6 +6,17 @@ import numpy.typing as ntp
 G = 6.67e-11
 
 def _calculate_a(planets : list[Planet], i : int, j : int) -> ntp.NDArray[np.float64]:
+    """
+    Функция для вычисления ускорения планеты по расстояниям между ней и другими планетами.
+
+    Принимаемые значения:
+    planets - список планет, имеющих одинаковые dim и n;
+    i - индекс планеты в списке, для которой ищется ускорение;
+    j - индекс временного узла, в котором необходимо найти ускорение.
+
+    Возвращаемое значение:
+    Массив размерности dim хранящий компоненты ускорения.
+    """
     m = len(planets)
     dim = planets[0].dim
     cur_movement = planets[i].movement
@@ -21,6 +32,15 @@ def _calculate_a(planets : list[Planet], i : int, j : int) -> ntp.NDArray[np.flo
     return sum_a
 
 def calculate_euler(planets : list[Planet], start_pos : int, size : int, ht : int):
+    """
+    Функция для вычисления перемещения планет методом Эйлера.
+
+    Принимаемые значения:
+    planets - список планет, имеющих одинаковые dim и n;
+    start_pos - индекс временного узла, с которого начнутся вычисления;
+    size - число временных узлов, которые должны быть вычислены;
+    ht - шаг дискретизации по времени.
+    """
     m = len(planets)
     size = min(size, planets[0].n-start_pos)
     for j in range(start_pos, start_pos+size):
@@ -31,6 +51,15 @@ def calculate_euler(planets : list[Planet], start_pos : int, size : int, ht : in
             movement.set_r(j+1, movement.get_r(j) + movement.get_v(j) * ht)
 
 def calculate_eulkram(planets : list[Planet], start_pos : int, size : int, ht : int):
+    """
+    Функция для вычисления перемещения планет методом Эйлера-Крамера.
+
+    Принимаемые значения:
+    planets - список планет, имеющих одинаковые dim и n;
+    start_pos - индекс временного узла, с которого начнутся вычисления;
+    size - число временных узлов, которые должны быть вычислены;
+    ht - шаг дискретизации по времени.
+    """
     m = len(planets)
     size = min(size, planets[0].n-start_pos)
     for j in range(start_pos, start_pos+size):
@@ -41,6 +70,9 @@ def calculate_eulkram(planets : list[Planet], start_pos : int, size : int, ht : 
             movement.set_r(j+1, movement.get_r(j) + movement.get_v(j+1) * ht)
 
 def _init_biman(calculate_biman):
+    """
+    Функция-декоратор для задания начальных значений перемещения планет для метода Бимана.
+    """
     def wraper(planets : list[Planet], start_pos : int, size : int, ht : int):
         if start_pos == 0:
             m = len(planets)
@@ -60,6 +92,15 @@ def _init_biman(calculate_biman):
 
 @_init_biman
 def calculate_biman(planets : list[Planet], start_pos : int, size : int, ht : int):
+    """
+    Функция для вычисления перемещения планет методом Бимана.
+
+    Принимаемые значения:
+    planets - список планет, имеющих одинаковые dim и n;
+    start_pos - индекс временного узла, с которого начнутся вычисления;
+    size - число временных узлов, которые должны быть вычислены;
+    ht - шаг дискретизации по времени.
+    """
     m = len(planets)
     size = min(size, planets[0].n-start_pos)
     for j in range(start_pos, start_pos+size):
@@ -70,6 +111,9 @@ def calculate_biman(planets : list[Planet], start_pos : int, size : int, ht : in
             movement.set_r(j+1, movement.get_r(j) + movement.get_v(j)*ht - 1/6*(4*movement.get_a(j) - movement.get_a(j-1))*(ht**2))
 
 def _init_vernel(calculate_vernel):
+    """
+    Функция-декоратор для задания начальных значений перемещения планет для метода Вернеле.
+    """
     def wraper(planets : list[Planet], start_pos : int, size : int, ht : int):
         if start_pos == 0:
             m = len(planets)
@@ -85,6 +129,15 @@ def _init_vernel(calculate_vernel):
 
 @_init_vernel
 def calculate_vernel(planets : list[Planet], start_pos : int, size : int, ht : int):
+    """
+    Функция для вычисления перемещения планет методом Вернеле.
+
+    Принимаемые значения:
+    planets - список планет, имеющих одинаковые dim и n;
+    start_pos - индекс временного узла, с которого начнутся вычисления;
+    size - число временных узлов, которые должны быть вычислены;
+    ht - шаг дискретизации по времени.
+    """
     m = len(planets)
     size = min(size, planets[0].n-start_pos)
     for j in range(start_pos, start_pos+size):
