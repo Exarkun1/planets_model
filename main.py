@@ -5,8 +5,8 @@ from matplotlib import animation
 from planets import Planet
 import difference_schemes as ds
 
-t = 3153600000
-ht = 36000
+t = 315360000
+ht = 3600
 
 n = t // ht
 step = 100
@@ -20,16 +20,18 @@ planets = [
 def animate_system(num):
     ax.clear()
     ds.calculate_vernel(planets, num*step, step, ht)
+    u = 0
     for planet in planets:
         r = planet.movement._r
         m = planet.m
         ax.plot3D(r[0, :(num+1)*step], r[1, :(num+1)*step], r[2, :(num+1)*step])
         if m > 1e29:
-            ax.scatter(r[0, (num+1)*step], r[1, (num+1)*step], r[2, (num+1)*step], s=60)
+            ax.scatter(r[0, (num+1)*step-1], r[1, (num+1)*step-1], r[2, (num+1)*step-1], s=60)
         else:
-            ax.scatter(r[0, (num+1)*step], r[1, (num+1)*step], r[2, (num+1)*step], s=20)
+            ax.scatter(r[0, (num+1)*step-1], r[1, (num+1)*step-1], r[2, (num+1)*step-1], s=20)
+        u += planet.energy.get_u(num*step)
 
-    ax.set_title(f'Time = {ht*(num+1)*step} sec\n')
+    ax.set_title(f'Time = {ht*(num+1)*step-1} sec\nEnergy = {u}')
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_zlabel('z')
