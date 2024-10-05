@@ -1,6 +1,6 @@
 import numpy as np
 import math
-from planets import Planet
+from gravity.planets import Planet
 import numpy.typing as ntp
 
 G = 6.67e-11
