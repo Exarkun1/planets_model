@@ -26,12 +26,12 @@ def animate_system(num):
         m = planet.m
         ax.plot3D(r[0, :(num+1)*step], r[1, :(num+1)*step], r[2, :(num+1)*step])
         if m > 1e29:
-            ax.scatter(r[0, (num+1)*step], r[1, (num+1)*step], r[2, (num+1)*step], s=60)
+            ax.scatter(r[0, (num+1)*step-1], r[1, (num+1)*step-1], r[2, (num+1)*step-1], s=60)
         else:
-            ax.scatter(r[0, (num+1)*step], r[1, (num+1)*step], r[2, (num+1)*step], s=20)
+            ax.scatter(r[0, (num+1)*step-1], r[1, (num+1)*step-1], r[2, (num+1)*step-1], s=20)
         u += planet.energy.get_u(num*step)
 
-    ax.set_title(f'Time = {ht*(num+1)*step} sec\nEnergy = {u}')
+    ax.set_title(f'Time = {ht*(num+1)*step-1} sec\nEnergy = {u}')
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_zlabel('z')
