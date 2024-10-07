@@ -38,7 +38,14 @@ class PlanetMovement:
         self._a[:, index] = a
 
 class PlanetEnergy:
+    """
+    Класс для хранения изменений кинетической и потенциальной энергии планет.
+    """
     def __init__(self, n : int):
+        """
+        Принимаемые значения:
+        n - число узлов временного промежутка.
+        """
         self._uk = np.zeros([n+1])
         self._up = np.zeros([n+1])
 
