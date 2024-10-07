@@ -1,8 +1,6 @@
 from PyQt6 import QtCore, QtWidgets
 
 import interface.widgets as widgets
-from application.utils import AppPapams
-import gravity.difference_schemes as ds
 
 class UiMainWindow:
     def setupUi(self):
@@ -57,9 +55,7 @@ class UiMainWindow:
         self.central_box.add_widget(self.sidebar_box)
         self.central_box.add_widget(self.graphic_box)
 
-
-class MainWindow(QtWidgets.QMainWindow, UiMainWindow):
-    def __init__(self):
-        super(QtWidgets.QMainWindow, self).__init__()
-        self.setupUi()
-        self.app = AppPapams()
+class TimerMainWindow:
+    def setupTimer(self, interval:int=100):
+        self.frame_timer = QtCore.QTimer()
+        self.frame_timer.setInterval(interval)

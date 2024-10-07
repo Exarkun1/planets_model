@@ -1,8 +1,8 @@
 import sys
 from PyQt6 import QtWidgets
 
-from interface.windows import MainWindow
-from application.utils import AppPapams
+from application.windows import MainWindow
+from application.params import AppPapams
 
 if __name__ == "__main__":
     AppPapams()
