@@ -40,6 +40,28 @@ class UiMainWindow:
             ])
         )
 
+        self.table = widgets.Table(cols=7)
+        self.table.add_texts(["X", "Y", "Z", "Vx", "Vy", "Vz", "M"])
+        self.add_row_button = QtWidgets.QPushButton("ADD ROW")
+        self.delete_row_button = QtWidgets.QPushButton("DELETE ROW")
+
+        self.method_list = QtWidgets.QComboBox()
+        self.method_list.addItems(["Euler", "Euler Kramer", "Biman", "Vernele"])
+
+        self.time_edit_line = QtWidgets.QLineEdit()
+        self.ht_edit_line = QtWidgets.QLineEdit()
+        self.sidebar_box.add_widget(
+            widgets.Form(widgets=[
+                widgets.HBox(widgets=[self.add_row_button, self.delete_row_button]),
+                self.table,
+                self.method_list,
+                widgets.HBox(widgets=[
+                    widgets.VBox(widgets=[QtWidgets.QLabel("Time, sec"), self.time_edit_line]),
+                    widgets.VBox(widgets=[QtWidgets.QLabel("Ht, sec"), self.ht_edit_line])
+                ])
+            ])
+        )
+
         self.play_button = QtWidgets.QPushButton("PLAY")
         self.pause_button = QtWidgets.QPushButton("PAUSE")
         self.reset_button = QtWidgets.QPushButton("RESET")

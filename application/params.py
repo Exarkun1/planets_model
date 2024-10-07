@@ -1,4 +1,5 @@
 from gravity.planets import Planet
+import gravity.difference_schemes as ds
 
 class AppPapams:
     instance = None
@@ -19,6 +20,15 @@ class AppPapams:
             Planet(6.08e24, 3, self.n, r0=[149500000000, 0, 0], v0=[0, 23000, 0]),
             Planet(1.21e29, 3, self.n, r0=[490000000000, 0, 0], v0=[0, 10000, 0])
         ]
+
+        self.calculate = ds.calculate_vernel
+
+        self.methods = {
+            "Euler": ds.calculate_euler,
+            "Euler Kramer": ds.calculate_eulkram,
+            "Biman": ds.calculate_biman,
+            "Vernel": ds.calculate_vernel
+        }
 
     @property
     def n(self):

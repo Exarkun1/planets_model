@@ -50,3 +50,27 @@ class TextLine(QtWidgets.QLineEdit):
         self.setEnabled(True)
         self.setText("")
         self.setReadOnly(True)
+
+class Table(QtWidgets.QTableWidget):
+    def __init__(self, cols=0):
+        super(__class__, self).__init__()
+        self.setRowCount(0)
+        self.setColumnCount(cols)
+        self.count = 0
+
+    def add_item(self, item : QtWidgets.QTableWidgetItem):
+        self.setHorizontalHeaderItem(self.count, item)
+        self.count += 1
+
+    def add_items(self, items : list[QtWidgets.QTableWidgetItem]):
+        for item in items:
+            self.add_item(item)
+
+    def add_text(self, text : str):
+        self.add_item(QtWidgets.QTableWidgetItem())
+        item = self.horizontalHeaderItem(self.count-1)
+        item.setText(text)
+
+    def add_texts(self, texts : list[str]):
+        for text in texts:
+            self.add_text(text)

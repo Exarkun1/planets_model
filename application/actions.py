@@ -1,6 +1,8 @@
 from application.params import AppPapams
 from interface.windows import UiMainWindow, TimerMainWindow
 import interface.widgets as widgets
+
+from gravity.planets import Planet
 import gravity.difference_schemes as ds
 
 def update_window(window : UiMainWindow):
@@ -63,7 +65,41 @@ def update_lines(num : int, time_sec : widgets.TextLine, time_day : widgets.Text
     time_sec.setText(str(time))
     time_day.setText(str(time // (3600*24)))
 
-def reset_timer(window : TimerMainWindow):
+def reset_timer(window : UiMainWindow):
     def wraper():
         update_window.num = 0
+        AppPapams().t = int(window.time_edit_line.text())
+        AppPapams().ht = int(window.ht_edit_line.text())
+        window.time_max_sec_line.setText(str(AppPapams().t))
+        window.time_max_day_line.setText(str(AppPapams().t // (3600*24)))
+
+        table = window.table
+        AppPapams().planets = []
+        planets = AppPapams().planets
+        for i in range(0, table.rowCount()):
+            x = float(table.item(i, 0).text())
+            y = float(table.item(i, 1).text())
+            z = float(table.item(i, 2).text())
+            vx = float(table.item(i, 3).text())
+            vy = float(table.item(i, 4).text())
+            vz = float(table.item(i, 5).text())
+            m = float(table.item(i, 6).text())
+            planets.append(Planet(m, 3, AppPapams().n, r0=[x, y, z], v0=[vx, vy, vz]))
+
+        AppPapams().calculate = AppPapams().methods[window.method_list.currentText()]
+    return wraper
+
+def add_row(window : UiMainWindow):
+    table = window.table
+    def wraper():
+        table.insertRow(table.rowCount())
+    return wraper
+
+def delete_row(window : UiMainWindow):
+    table = window.table
+    def wraper():
+        if len(table.selectedIndexes()) != 1:
+            table.removeRow(table.rowCount()-1)
+        else:
+            table.removeRow(table.selectedIndexes()[0].row())
     return wraper
