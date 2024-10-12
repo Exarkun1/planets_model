@@ -3,7 +3,13 @@ from PyQt6 import QtCore, QtWidgets
 import interface.widgets as widgets
 
 class UiMainWindow:
+    """
+    Класс, добавляющий в окно визуальные элементы.
+    """
     def setupUi(self):
+        """
+        Метод инициализации визуальных элементов.
+        """
         self.setObjectName("MainWindow")
         self.resize(1042, 571)
         self.central_box = widgets.HBox()
@@ -78,6 +84,16 @@ class UiMainWindow:
         self.central_box.add_widget(self.graphic_box)
 
 class TimerMainWindow:
-    def setupTimer(self, interval:int=100):
+    """
+    Класс, добавляющий в окно таймер.
+    """
+    def setupTimer(self, 
+                   interval : int = 100):
+        """
+        Метод инициализации таймера.
+
+        Args:
+            interval: промежуток времени между срабатываниями таймера.
+        """
         self.frame_timer = QtCore.QTimer()
         self.frame_timer.setInterval(interval)

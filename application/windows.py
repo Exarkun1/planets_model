@@ -1,8 +1,11 @@
-from PyQt6 import QtCore, QtWidgets
+from PyQt6 import QtWidgets
 from interface.windows import UiMainWindow, TimerMainWindow
 import application.actions as act
 
 class MainWindow(QtWidgets.QMainWindow, UiMainWindow, TimerMainWindow):
+    """
+    Класс основного окна.
+    """
     def __init__(self):
         super(QtWidgets.QMainWindow, self).__init__()
         self.setupUi()

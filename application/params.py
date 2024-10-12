@@ -2,6 +2,9 @@ from gravity.planets import Planet
 import gravity.difference_schemes as ds
 
 class AppPapams:
+    """
+    Класс параметров системы.
+    """
     instance = None
 
     def __new__(clc):
@@ -11,6 +14,9 @@ class AppPapams:
         return clc.instance
     
     def _initialize(self):
+        """
+        Метод инициализации параметров системы.
+        """
         self.t = 315360000
         self.ht = 3600
         self.step = 100
@@ -31,5 +37,11 @@ class AppPapams:
         }
 
     @property
-    def n(self):
+    def n(self) -> int:
+        """
+        Свойство для числа временных узлов.
+
+        Returns:
+            Число временных узлов. 
+        """
         return self.t // self.ht

@@ -1,11 +1,17 @@
 from application.params import AppPapams
-from interface.windows import UiMainWindow, TimerMainWindow
+from interface.windows import UiMainWindow
 import interface.widgets as widgets
 
 from gravity.planets import Planet
 import gravity.difference_schemes as ds
 
 def update_window(window : UiMainWindow):
+    """
+    Функция обновления окна.
+
+    Args:
+        window: окно с визуальными элементами.
+    """
     app = AppPapams()
     update_window.num = 0
     graphic = window.graphic_box
@@ -29,7 +35,15 @@ def update_window(window : UiMainWindow):
         graphic.draw()
     return wraper
 
-def update_axes(num : int, graphic : widgets.Graphic3D):
+def update_axes(num : int, 
+                graphic : widgets.Graphic3D):
+    """
+    Функция обновления графика на окне.
+
+    Args:
+        num: номер временного узла.
+        graphic: окно графика.
+    """
     planets = AppPapams().planets
     step = AppPapams().step
 
@@ -51,7 +65,19 @@ def update_axes(num : int, graphic : widgets.Graphic3D):
     ax.set_ylabel('y')
     ax.set_zlabel('z')
 
-def update_lines(num : int, time_sec : widgets.TextLine, time_day : widgets.TextLine, energy : widgets.TextLine):
+def update_lines(num : int, 
+                 time_sec : widgets.TextLine, 
+                 time_day : widgets.TextLine, 
+                 energy : widgets.TextLine):
+    """
+    Функция обновления текстовых полей окна.
+
+    Args:
+        num: номер временного узла.
+        time_sec: текстовое поле со значением времени в секундах.
+        time_day: текстовое поле со значением времени в днях.
+        energy: текстовое поле со значением энергии.
+    """
     planets = AppPapams().planets
     ht = AppPapams().ht
     step = AppPapams().step
@@ -66,6 +92,12 @@ def update_lines(num : int, time_sec : widgets.TextLine, time_day : widgets.Text
     time_day.setText(str(time // (3600*24)))
 
 def reset_timer(window : UiMainWindow):
+    """
+    Функция обновления данных о системе с элементов окна.
+
+    Args:
+        window: окно с визуальными элементами.
+    """
     def wraper():
         update_window.num = 0
         AppPapams().t = int(window.time_edit_line.text())
@@ -90,12 +122,24 @@ def reset_timer(window : UiMainWindow):
     return wraper
 
 def add_row(window : UiMainWindow):
+    """
+    Функция добавления строки в таблице окна.
+
+    Args:
+        window: окно с визуальными элементами.
+    """
     table = window.table
     def wraper():
         table.insertRow(table.rowCount())
     return wraper
 
 def delete_row(window : UiMainWindow):
+    """
+    Функция удаления строки в таблице окна.
+
+    Args:
+        window: окно с визуальными элементами.
+    """
     table = window.table
     def wraper():
         if len(table.selectedIndexes()) != 1:
