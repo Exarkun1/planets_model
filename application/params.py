@@ -36,6 +36,8 @@ class AppPapams:
             "Vernel": ds.calculate_vernel
         }
 
+        self.reseted = False
+
     @property
     def n(self) -> int:
         """

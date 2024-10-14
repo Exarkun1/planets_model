@@ -129,6 +129,10 @@ class Table(QtWidgets.QTableWidget):
     """
     def __init__(self, 
                  cols : int = 0):
+        """
+        Args:
+            cols: число столбцов.
+        """
         super(__class__, self).__init__()
         self.setRowCount(0)
         self.setColumnCount(cols)
@@ -178,3 +182,16 @@ class Table(QtWidgets.QTableWidget):
         """
         for text in texts:
             self.add_text(text)
+
+class Alert(QtWidgets.QDialog, AddableWidget):
+    def __init__(self, 
+                 window,
+                 text: str):
+        """
+        Args:
+            window: окно для присоединения.
+            text: текст ошибки.
+        """
+        super(__class__, self).__init__(window)
+        self.lay = QtWidgets.QHBoxLayout(self)
+        self.add_widget(QtWidgets.QLabel(text))
