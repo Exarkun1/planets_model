@@ -1,6 +1,8 @@
 from application.params import AppPapams
 from interface.windows import UiMainWindow, TimerMainWindow
 import interface.widgets as widgets
+from PyQt6.QtWidgets import QTableWidgetItem
+import math
 
 from gravity.planets import Planet
 import gravity.difference_schemes as ds
@@ -18,6 +20,7 @@ def update_window(window : UiMainWindow):
     time_sec = window.time_sec_line
     time_day = window.time_day_line
     energy = window.energy_line
+    center_m = window.center_m
 
     def wraper():
         if update_window.num == app.n // app.step:
@@ -26,10 +29,10 @@ def update_window(window : UiMainWindow):
         planets = AppPapams().planets
         ht = AppPapams().ht
         step = AppPapams().step
-        ds.calculate_vernel(planets, update_window.num*step, step, ht)
+        AppPapams().calculate(planets, update_window.num*step, step, ht)
 
         update_axes(update_window.num, graphic)
-        update_lines(update_window.num, time_sec, time_day, energy)
+        update_lines(update_window.num, time_sec, time_day, energy, center_m)
 
         update_window.num += 1
         graphic.draw()
@@ -68,7 +71,8 @@ def update_axes(num : int,
 def update_lines(num : int, 
                  time_sec : widgets.TextLine, 
                  time_day : widgets.TextLine, 
-                 energy : widgets.TextLine):
+                 energy : widgets.TextLine,
+                 center_m : widgets.TextLine):
     """
     Функция обновления текстовых полей окна.
 
@@ -86,10 +90,12 @@ def update_lines(num : int,
     for planet in planets:
         u += planet.energy.get_u(num*step)
     time = ht*(num+1)*step-1
+    m = ds.calculate_center_m(planets, num*step)
 
     energy.setText(str(u))
     time_sec.setText(str(time))
     time_day.setText(str(time // (3600*24)))
+    center_m.setText(f"{m[0]}, {m[1]}, {m[2]}")
 
 def start_timer(window : TimerMainWindow):
     """
@@ -157,6 +163,16 @@ def add_row(window : UiMainWindow):
     table = window.table
     def wraper():
         table.insertRow(table.rowCount())
+        if table.rowCount() == 1:
+            params = [0, 0, 0, 0, 0, 0, 1.2166E30]
+            for i in range(table.columnCount()):
+                table.setItem(table.rowCount() - 1, i, QTableWidgetItem(str(params[i])))
+        else:
+            planets_num = table.rowCount() - 1
+            # print(23297.8704870374 / math.sqrt(planets_num))
+            params = [planets_num * 149500000000, 0, 0, 0, 23297.8704870374 / math.sqrt(planets_num), 0, planets_num * 6.083E24]
+            for i in range(table.columnCount()):
+                table.setItem(table.rowCount() - 1, i, QTableWidgetItem(str(params[i])))
     return wraper
 
 def delete_row(window : UiMainWindow):

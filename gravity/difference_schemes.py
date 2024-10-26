@@ -256,3 +256,25 @@ def calculate_vernel(planets : list[Planet],
             movement.set_r(j+1, 2*movement.get_r(j) - movement.get_r(j-1) + movement.get_a(j)*(ht**2))
             movement.set_v(j, (movement.get_r(j+1) - movement.get_r(j-1))/(2*ht))
             energy.set_uk(j, _calculate_uk(planets, i, j))
+
+def calculate_center_m(planets : list[Planet],
+                       pos : int) -> ntp.NDArray[np.float64]:
+    """
+    Функция вычисления центра масс системы.
+
+    Args:
+        planets: список планет, имеющих одинаковые dim и n;
+        pos: индекс временного узла, для которого проведутся вычисления.
+
+    Returns:
+        Центр масс системы.
+    """
+    total_m = 0
+    for planet in planets:
+        total_m += planet.m
+
+    center_m = np.zeros(planets[0].dim)
+    for planet in planets:
+        center_m += planet.m / total_m * planet.movement._r[:, pos]
+
+    return center_m / total_m

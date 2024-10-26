@@ -1,4 +1,5 @@
 from PyQt6 import QtCore, QtWidgets
+from matplotlib.backends.backend_qt import NavigationToolbar2QT
 
 import interface.widgets as widgets
 
@@ -39,10 +40,13 @@ class UiMainWindow:
         )
 
         self.energy_line = widgets.TextLine()
+        self.center_m = widgets.TextLine()
         self.sidebar_box.add_widget(
             widgets.VBox(widgets=[
                 QtWidgets.QLabel("Total energy, J"),
-                self.energy_line
+                self.energy_line,
+                QtWidgets.QLabel("Center m"),
+                self.center_m
             ])
         )
 
@@ -52,7 +56,7 @@ class UiMainWindow:
         self.delete_row_button = QtWidgets.QPushButton("DELETE ROW")
 
         self.method_list = QtWidgets.QComboBox()
-        self.method_list.addItems(["Euler", "Euler Kramer", "Biman", "Vernele"])
+        self.method_list.addItems(["Euler", "Euler Kramer", "Biman", "Vernel"])
 
         self.time_edit_line = QtWidgets.QLineEdit()
         self.ht_edit_line = QtWidgets.QLineEdit()
@@ -81,7 +85,13 @@ class UiMainWindow:
 
         self.setCentralWidget(self.central_box)
         self.central_box.add_widget(self.sidebar_box)
-        self.central_box.add_widget(self.graphic_box)
+        self.central_box.add_widget(
+            widgets.VBox(widgets=[
+                self.graphic_box,
+                NavigationToolbar2QT(self.graphic_box, self)
+            ])
+        )
+        self.graphic_box.axes.format_coord = lambda x, y: ""
 
 class TimerMainWindow:
     """

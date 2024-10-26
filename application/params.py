@@ -27,7 +27,7 @@ class AppPapams:
             Planet(1.21e29, 3, self.n, r0=[490000000000, 0, 0], v0=[0, 10000, 0])
         ]
 
-        self.calculate = ds.calculate_vernel
+        self.calculate = ds.calculate_euler
 
         self.methods = {
             "Euler": ds.calculate_euler,
